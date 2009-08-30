@@ -1,0 +1,58 @@
+/*
+ * Custom skin for dialogs.
+ * Yellowish tint.
+ */
+.dialog {
+/*    position: absolute;*/
+    z-index: 2;
+    margin-bottom: 300px;
+    border: 1px solid black;
+}
+
+.dialog .tl {
+    background: #f3fbba url("dlg-topleft.png") no-repeat top left;
+}
+.dialog .tr {
+    background: transparent url("dlg-topright.png") no-repeat top right;
+}
+.dialog .bl {
+    background: transparent url("dlg-botleft.png") no-repeat bottom left;
+}
+.dialog .br {
+    background: transparent url("dlg-botright.png") no-repeat bottom right;
+}
+.dialog .hd {
+    height: 24px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-bottom: 0;
+    border-top: 1px solid black;
+}
+.dialog .hd span {
+    line-height: 24px;
+    vertical-align: middle;
+}
+.dialog .bd {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    background-color: #f3fbba;
+    padding: 5px 4px 15px 4px;
+    font-size: 85%;
+}
+.dialog .container-close {
+    background: transparent url("dlg-close.png");
+    position: absolute;
+    top: 5px;
+    right: 9px;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+.dialog .ft {
+    height: 29px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-bottom: 0;
+    border-bottom: 1px solid black;
+    background-color: #f3fbba;
+}

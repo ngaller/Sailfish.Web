@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% for p in products %}
+<div class="product">
+<img alt="{{p.name}}" src="{{MEDIA_URL}}images/{{p.icon}}" class="icon"/>
+<div class="description">
+	<h1>{{p.name}}</h1>
+	<p>{{p.description}}</p>
+	<div class="product_buttons">
+		{% if p.is_freeware %}
+			<a class="button" href="{{p.download_url}}">Download</a>
+		{% else %}
+			<a class="button" href="{{p.download_url}}">Try Now</a>
+			<a class="button" href="/store/purchase/{{p.key}}">Purchase</a>
+		{% endif %}
+	</div>
+</div>
+</div>
+{% endfor %}
+{% endblock %}

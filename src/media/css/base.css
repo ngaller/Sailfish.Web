@@ -1,0 +1,210 @@
+/*
+ * Default styles were reset by Yahoo css - now we can establish them
+ */
+
+h1 {
+    font-size: 200%;
+}
+
+h2 {
+    font-size: 160%;
+}
+
+h3 {
+    font-size: 130%;
+}
+
+ul li {
+	list-style: disc inside;
+} 
+
+#container {
+    width: 800px;
+    background-color: #f4f4f9;
+    margin: 0pt auto;
+}
+
+/*
+ * Main page header
+ */
+#header {
+    /*background-image: url('../images/river.jpg');*/
+    background: url(../images/notepad.gif) repeat-x;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 450px;
+    float: left;
+}
+#header h1 {
+    font-size: 400%;
+    margin: 0px 0px 5px 10px;
+    color: #cc0000;
+    /*color: #cccccc;*/
+}
+#header h2 {
+    font-size: 140%;
+    color: #bbbbbb;
+}
+
+div#logo {
+    width: 250px;
+    float: right;
+}
+
+div#content {
+    width: 500px;
+    text-align: left;
+    margin: 0px 10px 10px 10px;
+    float: left;
+}
+
+div#navigation {
+    width: 250px;
+    float: right;
+    clear: right;
+}
+
+/* links on top level */
+div#navigation a {
+    text-decoration: none;
+    color: white;
+    /* fill containing div so they can't misclick */
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+div#navigation a:hover {
+    text-decoration: underline;
+}
+
+/* links from lower level */
+div#navigation div.items a {
+    display: block;
+    margin: 10px 20px;
+    padding-bottom: 4px;
+    text-decoration: none;
+    text-align: center;	
+    color: navy;
+    width: 7em;
+}
+/*
+div#navigation a:hover {
+    background-color: #aaaaaa;
+    color: #2222ee;
+    padding-bottom: 0px;		
+    font-size: 120%;
+}
+*/
+
+#body {
+    clear: both;
+    width: 98%;
+    padding: 10px 5px 20px 5px;
+}
+
+#footer {
+    width: 100%;
+    margin-top: 35px;
+    padding: 5px 5px 5px 5px;
+    clear: both;
+    font-size: 75%;
+    text-align: center;
+}
+
+/*
+ * Give drop shadow to a paragraph.
+ * The markup to use this is:
+ * <div class='p-shadow'><p>Here comes my text!</p></div>
+ */
+.p-shadow {
+    background: url(../images/shadowAlpha.png) no-repeat bottom right;
+    margin-top: 13px;
+}
+
+.p-shadow div {
+    background-color: white;
+    padding: 4px 4px 4px 4px;
+    text-align: left;
+    border: 1px solid #a9a9a9;
+    position: relative;
+    top: -6px;
+    left: -6px;
+}
+
+
+.error {
+    font-size: 90%;
+    color: red;
+}
+
+.required {
+    border-color: black;
+}
+
+
+/*
+ * Style for 2-level navigation list.
+ */
+div.category {
+    margin: 2px 0px 3px 4px;
+}
+
+div.category h1 {
+    font-size: 120%;
+    cursor: pointer;
+    text-align: left;
+    background-image: url(../images/theme/red/button-bkg.png);
+    background-repeat: no-repeat;
+    width: 227px;
+    height: 25px;
+    padding: 1px 0px 1px 20px;
+    color: white;
+}
+
+div.category.selected h1 {
+    color: white;
+    font-weight: bold;
+    background-position: left -27px;
+}
+
+div.category div.items {
+    margin-left: 20px;
+    text-align: left;
+    display: none;  /* hide by default */
+}
+
+div.category div.items a {
+    text-decoration: none;
+}
+
+div.category div.items a.selected {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+a.button {
+    font-size: 120%;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    background-image: url(../images/theme/red/button-bkg-small.png);
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 25px;
+    padding: 1px 0px 1px 20px;
+    color: white;
+    display: block;
+    float: left;
+}
+
+a.button:hover {
+	color: white;
+    font-weight: bold;
+	background-position: left -27px;
+}
+
+div.product img.icon {
+	float: left;
+	margin: 5px 10px 5px 5px;	
+}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+<script type="text/javascript">
+    $(document).ready(function() {
+            setNavCategory("software");
+    });
+</script>
+<img src="{{MEDIA_URL}}images/easylist.png" alt="EasyList screenshot" style="float: left; margin: 4px"/>
+<p>An easy to use list application, designed to work on simple cell phones 
+where network access is often limited by the carrier.  Very handy as a shopping list reminder!</p>
+<p>Features:
+<ul>
+    <li>No network connection required - works even on restricted carriers</li>
+    <li>Managed entirely from your phone - no need to log in to a separate site</li>
+    <li>Quick entry screen remembers the recently used items</li>
+</ul></p>
+<p>EasyList is available as a free download on <a href="http://www.getjar.com">GetJar</a></p>
+{% endblock %}

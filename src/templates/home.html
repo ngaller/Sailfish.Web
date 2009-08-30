@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<script type="text/javascript">
+    $(document).ready(function() {
+            setNavCategory("about");
+    });
+</script>
+<img src="{{MEDIA_URL}}images/phonepile.png" alt="Picture of cell phones" style="margin: 4px;float: left"/>
+Our mission is to provide you with the tools you need to make the most of
+today's devices.
+{% endblock %}

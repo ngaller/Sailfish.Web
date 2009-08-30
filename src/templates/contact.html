@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+<script type="text/javascript">
+    $(document).ready(function() {
+            setNavCategory("contact");
+    });
+</script>
+We welcome your comments and contact inquiries!  Please use the form below to send us an email.
+<form action="/contact/" method="post">
+    <table cellpadding="4">
+    {{ form.as_table }}
+</table>
+<input type="submit" value="Send!"/>
+</form>
+{% endblock %}

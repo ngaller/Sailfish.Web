@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+   <title>{% block title %}SailFish Consulting{% endblock %}</title>
+   <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/reset-fonts-grids.css">
+   <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/base.css"/>
+
+   
+   <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.js"></script>
+   <script type="text/javascript" src="{{MEDIA_URL}}js/navigation.js"></script>
+   <script type="text/javascript">
+    // stow this for use in included JS
+    document.MEDIA_URL = "/media";
+    document.DEBUG_ENABLED = "{{debug}}";
+   </script>
+   {% comment %}
+   Use the head block to add content to the header tag.
+   {% endcomment %}
+	{% block head %}{% endblock %}
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>SailFish Consulting</h1>
+            <h2>Mobile Solutions for your Mobile World</h2>
+        </div>
+        <div id="logo">
+            <img src="{{MEDIA_URL}}images/sailfish.png" alt="Sailfish Logo"/>
+        </div>
+
+        <div id="content">
+        {% comment %}
+        Use the body block for the page content
+        {% endcomment %}
+        {% block body %}{% endblock %}
+        </div>
+
+        <div id="navigation">
+            <div class="category" name="about">
+                <h1><a href="/">About us</a></h1>
+            </div>
+            <div class="category" name="software">
+            	<h1><a href="/store/">Software</a></h1>
+            </div>
+            <div class="category" name="contact">
+                <h1><a href="/contact/">Contact Us</a></h1>
+            </div>
+        </div>
+
+        <br style='clear: both'/>
+    </div>
+
+</body>
+</html>
+
