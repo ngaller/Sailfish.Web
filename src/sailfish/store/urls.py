@@ -10,5 +10,6 @@ urlpatterns = patterns('sailfish.store.views',
     # Example:
     # (r'^sailfish/', include('sailfish.foo.urls')),
     url('^$', 'index', name='store-index'),
-    ('^create/$', 'create')    
+    ('^create/$', 'create'),
+    url('^edit/(?P<id>\w+)/$', 'edit', name='store-edit'),
 )

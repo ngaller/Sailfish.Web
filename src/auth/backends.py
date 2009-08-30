@@ -17,7 +17,6 @@ class GaeBackend(object):
             return auth.user
         return None
 
-
     def get_login_url(self, request):
         """
         Login URL to redirect the user to - they should automatically be

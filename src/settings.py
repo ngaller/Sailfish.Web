@@ -70,6 +70,12 @@ TEMPLATE_DIRS = (
     'templates'
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'auth.context_processor',
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media"
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',

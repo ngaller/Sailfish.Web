@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+<form method="POST">
+	<table cellpadding="4">
+		{{ form.as_table }}
+	</table>
+	<input type="submit" value="Save"/>
+</form>
+{% endblock %}

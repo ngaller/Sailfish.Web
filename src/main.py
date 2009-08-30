@@ -34,7 +34,7 @@ def log_exception(*args, **kwds):
 #django.dispatch.dispatcher.connect(
 #   log_exception, django.core.signals.got_request_exception)
 # Django 1.0+
-#django.core.signals.got_request_exception.connect(log_exception)
+django.core.signals.got_request_exception.connect(log_exception)
 
 # Unregister the rollback event handler.
 # Django 0.96

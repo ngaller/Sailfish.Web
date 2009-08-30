@@ -6,7 +6,11 @@
 <img alt="{{p.name}}" src="{{MEDIA_URL}}images/{{p.icon}}" class="icon"/>
 <div class="description">
 	<h1>{{p.name}}</h1>
-	<p>{{p.description}}</p>
+	<p>{{p.description|safe}}</p>	
+		{% if user.is_admin %}
+			<a href="/store/edit/{{p.key}}">Edit</a><br/>
+		{% endif %}
+
 	<div class="product_buttons">
 		{% if p.is_freeware %}
 			<a class="button" href="{{p.download_url}}">Download</a>

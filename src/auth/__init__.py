@@ -60,3 +60,5 @@ def get_login_url(request):
             return val
     return None
 
+def context_processor(request):
+    return {'user': get_current_user(request)}
