@@ -5,7 +5,7 @@ Created on Aug 29, 2009
 '''
 # Django settings for sailfish project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

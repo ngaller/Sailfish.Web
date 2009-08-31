@@ -33,8 +33,11 @@ def contact(request):
 
 def send_email(data):
     subject = "Sailfish.mobi contact form"
-    message = "Contact from " + data["name"] + "\n\n" + data["comments"]
+    message = "Contact from " + data["name"] + "\nEmail address: " + data["email"] + "\n\n" + data["comments"]
     sender = data["email"]
     recipients = ["contact@sailfish.mobi"]
-    from django.core.mail import send_mail
-    send_mail(subject, message, sender, recipients)
+    from google.appengine.api.mail import send_mail
+    # Google syntax
+    send_mail("ngaller@gmail.com", recipients, subject, message)
+    # Django syntax
+    #send_mail(subject, message, sender, recipients)
