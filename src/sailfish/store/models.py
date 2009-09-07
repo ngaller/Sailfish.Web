@@ -20,6 +20,7 @@ class Product(db.Model):
     price = db.FloatProperty()
     icon = db.StringProperty()
     download_url = db.StringProperty()
+    download_url_ota = db.StringProperty()
     # Secret used for activation
     secret = db.StringProperty()
     # if this is False product will only be shown for Admin
@@ -33,17 +34,26 @@ class ProductForm(djangoforms.ModelForm):
         model = Product
         
 class UserProduct(db.Model):
-    user = db.Reference(UserProfile)
+    """
+    Represent's a user's product.  Parent entity = UserProfile.
+    """
     product = db.Reference(Product)
     pin = db.StringProperty()
-    purchase_date = db.DateTimeProperty()
+    purchase_date = db.DateTimeProperty()    
     
-    def __init__(self, tx):
-        super(UserProduct, cls).__init__(self, tx)
-        self.user = tx.user
-        self.product = tx.product
-        self.purchase_date = tx.txdate
-        self.pin = tx.pin
+    @classmethod
+    def create_from_tx(cls, tx):
+        """
+        Initialize with given transaction.
+        """
+        up = UserProduct(parent=tx.user())
+        up.product = db.Key(tx.product_key)
+        up.purchase_date = tx.txdate
+        up.pin = tx.pin        
+        return up
+        
+    def user(self):
+        return self.parent()
         
     def send_thankyou_mail(self):
         """
@@ -53,7 +63,7 @@ class UserProduct(db.Model):
                                    "store/thankyou_mail.txt", 
                                    { 'userproduct': self,
                                      'tx': self.parent() },
-                                    self.user.preferred_email)
+                                    self.parent().preferred_email)
         
     def get_activation_code(self):
         """
@@ -70,36 +80,48 @@ class UserProduct(db.Model):
         True if the specified user already has a record for the product.
         """
         q = UserProduct.all(keys_only=True)
-        q.filter("user = ", user)
+        q.ancestor(user)
         q.filter("product = ", product)
         return q.count(1) > 0
         
 class PaypalRequest(db.Model):
     """
     Stores a paypal request awaiting confirmation.
+    Parent entity = user.
     """
-    user = db.Reference(UserProfile)
-    product = db.Reference(Product)
+    # Product is stored only as the key, rather than a reference, so that it
+    # may be read in a transaction.
+    product_key = db.StringProperty()
     txdate = db.DateTimeProperty(auto_now_add=True)
     txnid = db.StringProperty()
     amount = db.FloatProperty()
     pin = db.StringProperty()
     status = db.StringProperty()    
     
+    def user(self):
+        return self.parent()
+    
     def process_ipn(self, request):
         """
         Process the given IPN request (must have been already validated)
         This should be run within a transaction.
         """
-        if self.status == "PENDING" and \
+        if self.status != "COMPLETE" and \
             request.POST["payment_status"] == "Completed" and \
-            request.POST["payment_gross"] == self.amount:
-            userprod = UserProduct(self)
+            request.POST["mc_gross"] == str(self.amount) and \
+            request.POST["mc_currency"] == "USD":
+            userprod = UserProduct.create_from_tx(self)
             userprod.put()
             self.status = "COMPLETE"
             self.txnid = request.POST["txn_id"]
             self.put()
+            logging.info("Completed transaction with paypal id " + self.txnid)
             return userprod
+        logging.warn("Invalid transaction... " + 
+                     "status = " + self.status + "...  " + 
+                     "Amt = " + str(self.amount) + "...  " + 
+                     "Pmt Status = " + request.POST["payment_status"] + "... " + 
+                     "Txn ID = " + request.POST["txn_id"])
         return None
             
     
@@ -109,9 +131,8 @@ class PaypalRequest(db.Model):
         Save and return request to the database with current user and 
         designated product.
         """
-        tx = PaypalRequest()
-        tx.user = user
-        tx.product = product
+        tx = PaypalRequest(parent=user)
+        tx.product_key = str(product.key())
         tx.amount = product.price
         tx.pin = pin
         tx.status = "PENDING"

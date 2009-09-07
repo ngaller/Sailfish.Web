@@ -5,9 +5,11 @@ Created on Aug 29, 2009
 '''
 # Django settings for sailfish project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ("24.217.162.30","192.168.2.4","192.168.2.1","127.0.0.1")
+
+APPEND_SLASH = False
 
 # Addresses that get emailed when there is an error... but it doesn't work
 # on GAE anyway

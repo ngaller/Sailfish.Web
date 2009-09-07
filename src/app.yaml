@@ -4,6 +4,16 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /bb/(.*)\.cod
+  static_files: media/bb/\1.cod
+  upload: media/bb/(.*)\.cod
+  mime_type: application/vnd.rim.cod
+
+- url: /bb/(.*)\.jad
+  static_files: media/bb/\1.jad
+  upload: media/bb/(.*)\.jad
+  mime_type: text/vnd.sun.j2me.app-descriptor
+
 - url: /media
   static_dir: media
 

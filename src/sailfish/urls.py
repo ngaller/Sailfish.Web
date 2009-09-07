@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     # (r'^sailfish/', include('sailfish.foo.urls')),
     ('^$', direct_to_template, { 'template': 'home.html' }),
     ('^contact/$', 'sailfish.views.contact' ),
-    ('^store/', include('sailfish.store.urls')),
+    ('^store/?', include('sailfish.store.urls')),
     ('^auth/', include('auth.urls')),
     ('^(.*.html)$', direct_to_template),
 

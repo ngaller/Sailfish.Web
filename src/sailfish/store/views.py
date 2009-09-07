@@ -7,6 +7,7 @@ import sys, logging
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from auth.decorators import login_required
+from google.appengine.ext import db
 import auth
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -86,15 +87,19 @@ def purchase_do(request, product):
                                'txid': tx.key() },
                               RequestContext(request))
     
-def paypal_ipn(request, txid):
+def paypal_ipn(request):
     """
     Make sure this is a valid request, and activate the corresponding record.
+    The transaction id is passed as a custom variable.
     """
     if PaypalRequest.validate_ipn(request):
-        tx = PaypalRequest.get(txid)
-        if not tx:
-            raise Http404("Transaction not found")
-        userprod = tx.process_ipn(request)
+        def tran():
+            #tx = PaypalRequest.get_by_id(request.POST["item_number"])
+            tx = PaypalRequest.get(request.POST["custom"])
+            if not tx:
+                raise Http404("Transaction not found")
+            return tx.process_ipn(request)
+        userprod = db.run_in_transaction(tran)
         if userprod:
             userprod.send_thankyou_mail()
     return HttpResponse("OK", mimetype="text/plain")
