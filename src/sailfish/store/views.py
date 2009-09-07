@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import forms
 from datetime import datetime
-from models import Product, ProductForm, PaypalRequest
+from models import Product, ProductForm, PaypalRequest, UserProduct
 
 def index(request):
     "Index page - show available products"
@@ -53,6 +53,11 @@ class PurchaseForm(forms.Form):
 def purchase_do(request, product):
     if not product:
         raise Http404("Product cannot be found")
+    if UserProduct.has_product(auth.get_current_user(request), product):
+        return render_to_response('store/details.html', 
+                                  {'p': product, 
+                                   'msg': "You already own this application - to associate with a different device please contact support or use another account."},
+                                   RequestContext(request))
     if request.method == "POST":
         form = PurchaseForm(data=request.POST)
         if form.is_valid():
@@ -73,7 +78,7 @@ def purchase_do(request, product):
         form = PurchaseForm(data={'email': email, 'pin': pin})
         return render_to_response('store/purchase_info.html', 
                                   { 'form': form, 'product': product },
-                                  RequestContext(request))    
+                                  RequestContext(request))        
     tx = PaypalRequest.prepare(product, auth.get_current_user(request), pin)
     return render_to_response('store/purchase.html', 
                               {'product': product, 
@@ -94,6 +99,14 @@ def paypal_ipn(request, txid):
             userprod.send_thankyou_mail()
     return HttpResponse("OK", mimetype="text/plain")
 
+def thankyou(request, txid):
+    tx = PaypalRequest.get(txid)
+    if not tx:
+        raise Http404("Transaction not found")    
+    return render_to_response('store/thankyou.html', 
+                              { 'tx' : tx }, 
+                              RequestContext(request))
+
 def activate(request):
     """
     Make sure the user has the product (identify using PIN), and return
@@ -103,7 +116,12 @@ def activate(request):
     p = Product.get_by_key_name(request.GET["app"], None)
     if not p:
         raise Http404("Product not found")
-    pass
+    userproduct = UserProduct.gql("where pin = :1 and product = :2", 
+                                  pin, p).get()
+    if not userproduct:
+        raise Http404("Activation data not found")
+    return HttpResponse(userproduct.get_activation_code(), mime_type='text/plain')
+    
 
 @login_required
 def create(request, keyname):

@@ -16,6 +16,7 @@ urlpatterns = patterns('sailfish.store.views',
     (r'^purchase/$', 'purchase_search'),
     (r'^purchase/(?P<id>\w+)/$', 'purchase'),
     (r'^activate/$', 'activate'),
+    (r'^thankyou/(?P<txid>\w+)$', 'thankyou'),
     url(r'^paypal_ipn/(?P<txid>\w+)$', 'paypal_ipn', name="store-paypal_ipn"),
     url(r'^edit/(?P<id>\w+)/$', 'edit', name='store-edit'),
 )

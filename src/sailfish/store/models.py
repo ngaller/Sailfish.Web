@@ -9,7 +9,7 @@ from auth.models import UserProfile
 import logging
 import settings
 import urllib2
-import utils
+import sailfish.utils
 
 class Product(db.Model):
     """
@@ -52,14 +52,27 @@ class UserProduct(db.Model):
         utils.send_templated_email("Your Sailfish Mobile purchase confirmation", 
                                    "store/thankyou_mail.txt", 
                                    { 'userproduct': self,
-                                     'tx': self.parent() })
+                                     'tx': self.parent() },
+                                    self.user.preferred_email)
+        
+    def get_activation_code(self):
+        """
+        Activation code based on user id and app's secret
+        """
+        s = self.pin + "|" + self.product.secret
+        import md5
+        import base64
+        return base64.encodestring(md5.md5(s).digest()).strip()
     
     @classmethod
     def has_product(cls, user, product):
         """
         True if the specified user already has a record for the product.
         """
-        pass
+        q = UserProduct.all(keys_only=True)
+        q.filter("user = ", user)
+        q.filter("product = ", product)
+        return q.count(1) > 0
         
 class PaypalRequest(db.Model):
     """
@@ -80,7 +93,7 @@ class PaypalRequest(db.Model):
         """
         if self.status == "PENDING" and \
             request.POST["payment_status"] == "Completed" and \
-            request.POST["payment_gross"] == amount:
+            request.POST["payment_gross"] == self.amount:
             userprod = UserProduct(self)
             userprod.put()
             self.status = "COMPLETE"
@@ -119,9 +132,7 @@ class PaypalRequest(db.Model):
         response = urllib2.urlopen(base_url, data)
         response_data = response.read()
         if response_data == "VERIFIED":
-            logging.info("Valid IPN data: ")
-            for (k,v) in request.POST.items():
-                logging.info(k + " = " + v)
+            logging.info("Received paypal notification: " + request.POST["txn_id"])
             return True
         else:
             logging.warn("Invalid IPN data: " + 
