@@ -1,0 +1,9 @@
+The transaction is complete and you should now be able to activate
+the application from your device.
+
+Details:
+  Application: {{ userproduct.product.name }}
+  Registered PIN: 0x{{userproduct.pin}}
+  Transaction #: {{tx.txnid}}
+  
+Thank you for your purchase!
