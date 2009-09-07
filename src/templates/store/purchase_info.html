@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+<form method="POST">
+	Please confirm your information before continuing:
+	<table cellpadding="4">
+		{{form.as_table}}		
+	</table>
+	<input type="submit" value="Save and Continue"></input>
+</form>
+{% endblock %}

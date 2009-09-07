@@ -5,12 +5,18 @@ Created on Aug 29, 2009
 '''
 # Django settings for sailfish project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+INTERNAL_IPS = ("24.217.162.30","192.168.2.4","192.168.2.1","127.0.0.1")
 
-ADMINS = (
-    ('Sailfish', 'support@sailfish.mobi'),
-)
+# Addresses that get emailed when there is an error... but it doesn't work
+# on GAE anyway
+#ADMINS = (
+#    ('Sailfish', 'support@sailfish.mobi'),
+#)
+ADMINS = ()
+
+DEFAULT_FROM_EMAIL = "support@sailfish.mobi"
 
 MANAGERS = ADMINS
 
@@ -70,11 +76,12 @@ TEMPLATE_DIRS = (
     'templates'
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'auth.context_processor',
+TEMPLATE_CONTEXT_PROCESSORS = (    
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
-    "django.core.context_processors.media"
+    "django.core.context_processors.media",
+    'auth.context_processor',
+    'sailfish.context_processor',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body %}
+<p>Please review the information below and click "Buy Now" to checkout using PayPal:</p>
+<ul>
+	<li>Product name: {{product.name}}</li>
+	<li>Device PIN: {{pin}} (<b>Please make sure this is the same PIN as on the Blackberry you will be using the app on</b>)</li>
+	<li>Price: {{product.price}} USD</li>
+</ul>
+<br/>
+
+{% if debug %}
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="notify_url" value="{{ BASE_URL }}{% url store-paypal_ipn txid %}"/>
+<input type="hidden" name="business" value="nicgal_1252257273_biz@hotmail.com">
+<input type="hidden" name="amount" value="{{product.price}}"/>
+<input type="hidden" name="item_name" value="{{product.name}}"/>
+<input type="hidden" name="item_number" value="{{product.key.name}}"/>
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="button_subtype" value="products">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+{% else %}
+
+{% endif %}
+
+
+<p>Satisfaction guarantee!  If you are not satisfied with your purchase for any reason, please write 
+<a href="mailto:support@sailfish.mobi">our support team</a> for a full refund.</p>
+{% endblock %}

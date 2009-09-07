@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     ('^$', direct_to_template, { 'template': 'home.html' }),
     ('^contact/$', 'sailfish.views.contact' ),
     ('^store/', include('sailfish.store.urls')),
+    ('^auth/', include('auth.urls')),
     ('^(.*.html)$', direct_to_template),
 
     # Media (this is only used for dev since in production it will be 

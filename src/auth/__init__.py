@@ -60,5 +60,15 @@ def get_login_url(request):
             return val
     return None
 
+def get_logout_url(request):
+    """
+    Form a logout url for the request.
+    """
+    for backend in get_backends():
+        val = backend.get_logout_url(request)
+        if val:
+            return val
+    return None    
+    
 def context_processor(request):
     return {'user': get_current_user(request)}

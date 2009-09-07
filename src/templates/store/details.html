@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% block body %}
-{% for p in products %}
-{% if user.is_admin or p.available %}
 <div class="product">
 <img alt="{{p.name}}" src="{{MEDIA_URL}}images/{{p.icon}}" class="icon"/>
 <div class="description">
@@ -22,6 +20,4 @@
 	</div>
 </div>
 </div>
-{% endif %}
-{% endfor %}
 {% endblock %}

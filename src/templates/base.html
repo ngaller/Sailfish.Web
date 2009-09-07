@@ -2,10 +2,15 @@
  "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-   <title>{% block title %}SailFish Consulting{% endblock %}</title>
+   <title>{% block title %}SailFish Software{% endblock %}</title>
    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/reset-fonts-grids.css">
-   <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/base.css"/>
-
+   <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/base.css"/>   
+   <link rel="icon" type="image/gif" href="{{MEDIA_URL}}images/favicon.gif"/>
+   
+   {% if MOBILE %}   
+   <meta name="HandheldFriendly" content="True"/>
+   <meta name="Viewport" content="width=device-width"/>
+   {% endif %}
    
    <script type="text/javascript" src="{{MEDIA_URL}}js/jquery.js"></script>
    <script type="text/javascript" src="{{MEDIA_URL}}js/navigation.js"></script>
@@ -46,9 +51,19 @@
             <div class="category" name="contact">
                 <h1><a href="/contact/">Contact Us</a></h1>
             </div>
+            <br/>
+            {% if user %}
+            <div class="category" name="logout">
+            	<h1><a href="/auth/logout">Log out</a></h1>
+            </div>
+            {% endif %}
         </div>
 
         <br style='clear: both'/>
+        
+        <div id="footer">
+        Copyright &#169; 2009 Sailfish Mobile
+        </div>
     </div>
 
 </body>

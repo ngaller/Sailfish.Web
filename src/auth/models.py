@@ -7,6 +7,7 @@ class UserProfile(db.Expando):
     """
     username = db.StringProperty()
     emails = db.StringListProperty()
+    preferred_email = db.StringProperty()
     is_guest = db.BooleanProperty()
     is_admin = db.BooleanProperty()
 
@@ -17,6 +18,10 @@ class UserProfile(db.Expando):
         """
         if self.username.find("@") > -1 and self.emails.count(self.username) == 0:
             self.emails.append(self.username)
+        if self.preferred_email and self.emails.count(self.preferred_email) == 0:
+            self.emails.append(self.preferred_email)
+        if not self.preferred_email and len(self.emails) > 0:
+            self.preferred_email = self.emails[0]
         db.Expando.put(self)
 
 class UserAuthentication(db.Expando):
