@@ -9,6 +9,6 @@ from django.views.generic.simple import direct_to_template
 urlpatterns = patterns('auth.views',
     # Example:
     # (r'^sailfish/', include('sailfish.foo.urls')),
-    url('^logout$', 'logout', name='auth-logout'),
-    url('^login$', 'login', name='auth-login'),
+    url('^logout/$', 'logout', name='auth-logout'),
+    url('^login/$', 'login', name='auth-login'),
 )

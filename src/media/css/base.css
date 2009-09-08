@@ -183,6 +183,13 @@ div.category div.items a.selected {
     font-weight: bold;
 }
 
+div.separator {
+	background-color: lightblue;
+	width: 70%;
+	margin: 0px auto;
+	border: 1px solid navy;
+}
+
 a.button {
     font-size: 120%;
     cursor: pointer;

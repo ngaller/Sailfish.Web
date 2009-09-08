@@ -1,0 +1,8 @@
+MIDlet-1: EasyList,/list.png,mobi.sailfish.easylist.ui.ShopMidlet
+MIDlet-Jar-Size: 32514
+MIDlet-Jar-URL: EasyList.jar
+MIDlet-Name: EasyList
+MIDlet-Vendor: www.sailfish.mobi
+MIDlet-Version: 1.1
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0

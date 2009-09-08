@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h2>Contact Loader Lists</h2>
+
+<p>You can upload the contact files to be imported to this website.
+Then, from your blackberry, select "Import from Web" to import the list
+you uploaded.</p>
+
+{% if lst %}
+
+<p>You have <a href="/contactloader/download/mylist.csv">1 list</a> uploaded on {{ lst.upload_date }}.</p>
+
+{% endif %}
+
+{% if reg %}
+
+<form method="POST" enctype="multipart/form-data">
+<br/>
+<table cellpadding="4">
+{{form.as_table}}
+<tr>
+<td>
+<input type="submit" value="Save"/><br/>
+</td>
+</tr>
+</table>
+</form>
+
+{% else %}
+
+<p>It does not appear you have purchased Contact Loader yet.  Maybe you are 
+logged on with the wrong account?  If you have just purchased the app, it can
+take a few minutes to activate.  But if this is an error please <a href="/contact">contact us</a>
+(mention your Paypal transaction id, if you have it).</p>
+<p>If you wish to purchase or try out Contact Loader, the easiest way is to 
+<a href="/store/details/{{product.key}}">download it</a> to your device - 
+purchase and activation are done from your Blackberry.</p>
+
+{% endif %}
+
+{% endblock %}

@@ -25,7 +25,20 @@
 <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
 {% else %}
-
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="notify_url" value="{{ BASE_URL }}{% url store-paypal_ipn %}"/>
+<input type="hidden" name="business" value="contact@sailfish.mobi">
+<input type="hidden" name="amount" value="{{product.price}}"/>
+<input type="hidden" name="item_name" value="{{product.name}}"/>
+<input type="hidden" name="item_number" value="{{product.key.name}}"/>
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="custom" value="{{txid}}">
+<input type="hidden" name="button_subtype" value="products">
+<input type="hidden" name="return" value="{{ BASE_URL }}{% url store-thankyou txid %}">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
 {% endif %}
 
 

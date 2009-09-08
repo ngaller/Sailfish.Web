@@ -4,15 +4,20 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /bb/(.*)\.cod
-  static_files: media/bb/\1.cod
-  upload: media/bb/(.*)\.cod
+- url: /ota/(.*)\.cod
+  static_files: media/ota/\1.cod
+  upload: media/ota/(.*)\.cod
   mime_type: application/vnd.rim.cod
 
-- url: /bb/(.*)\.jad
-  static_files: media/bb/\1.jad
-  upload: media/bb/(.*)\.jad
+- url: /ota/(.*)\.jad
+  static_files: media/ota/\1.jad
+  upload: media/ota/(.*)\.jad
   mime_type: text/vnd.sun.j2me.app-descriptor
+
+- url: /ota/(.*)\.jar
+  static_files: media/ota/\1.jar
+  upload: media/ota/(.*)\.jar
+  mime_type: application/java-archive
 
 - url: /media
   static_dir: media

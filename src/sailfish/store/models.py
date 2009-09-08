@@ -17,14 +17,16 @@ class Product(db.Model):
     """
     name = db.StringProperty()
     description = db.TextProperty()
-    price = db.FloatProperty()
-    icon = db.StringProperty()
-    download_url = db.StringProperty()
-    download_url_ota = db.StringProperty()
+    price = db.FloatProperty(indexed=False)
+    icon = db.StringProperty(indexed=False)
+    download_url = db.StringProperty(indexed=False)
+    download_url_ota = db.StringProperty(indexed=False)
     # Secret used for activation
-    secret = db.StringProperty()
+    secret = db.StringProperty(indexed=False)
     # if this is False product will only be shown for Admin
-    available = db.BooleanProperty()
+    available = db.BooleanProperty(indexed=False)
+    # url of associated site
+    service_url = db.StringProperty(indexed=False)
     
     def is_freeware(self):
         return self.price == 0
@@ -39,7 +41,7 @@ class UserProduct(db.Model):
     """
     product = db.Reference(Product)
     pin = db.StringProperty()
-    purchase_date = db.DateTimeProperty()    
+    purchase_date = db.DateTimeProperty()        
     
     @classmethod
     def create_from_tx(cls, tx):
@@ -63,7 +65,7 @@ class UserProduct(db.Model):
                                    "store/thankyou_mail.txt", 
                                    { 'userproduct': self,
                                      'tx': self.parent() },
-                                    self.parent().preferred_email)
+                                    self.parent().preferred_email or self.parent().emails[0])
         
     def get_activation_code(self):
         """
@@ -73,6 +75,12 @@ class UserProduct(db.Model):
         import md5
         import base64
         return base64.encodestring(md5.md5(s).digest()).strip()
+    
+    def validate_code(self, code):
+        """
+        Return true if code is valid.
+        """
+        return self.get_activation_code() == code
     
     @classmethod
     def has_product(cls, user, product):
@@ -96,7 +104,7 @@ class PaypalRequest(db.Model):
     txnid = db.StringProperty()
     amount = db.FloatProperty()
     pin = db.StringProperty()
-    status = db.StringProperty()    
+    status = db.StringProperty()
     
     def user(self):
         return self.parent()
