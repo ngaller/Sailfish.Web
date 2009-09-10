@@ -54,7 +54,7 @@ class PurchaseForm(forms.Form):
 def purchase_do(request, product):
     if not product:
         raise Http404("Product cannot be found")
-    if UserProduct.has_product(auth.get_current_user(request), product):
+    if UserProduct.get_product(auth.get_current_user(request), product):
         return render_to_response('store/details.html', 
                                   {'p': product, 
                                    'msg': "You already own this application - to associate with a different device please contact support or use another account."},
@@ -125,7 +125,7 @@ def activate(request):
                                   pin, p).get()
     if not userproduct:
         raise Http404("Activation data not found")
-    return HttpResponse(userproduct.get_activation_code(), mime_type='text/plain')
+    return HttpResponse(userproduct.get_activation_code(), mimetype='text/plain')
     
 
 @login_required

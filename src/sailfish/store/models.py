@@ -9,7 +9,7 @@ from auth.models import UserProfile
 import logging
 import settings
 import urllib2
-import sailfish.utils
+from sailfish.utils import send_templated_email
 
 class Product(db.Model):
     """
@@ -61,7 +61,7 @@ class UserProduct(db.Model):
         """
         Called after IPN.  Send a confirmation to the user.
         """
-        utils.send_templated_email("Your Sailfish Mobile purchase confirmation", 
+        send_templated_email("Your Sailfish Mobile purchase confirmation", 
                                    "store/thankyou_mail.txt", 
                                    { 'userproduct': self,
                                      'tx': self.parent() },
@@ -83,14 +83,16 @@ class UserProduct(db.Model):
         return self.get_activation_code() == code
     
     @classmethod
-    def has_product(cls, user, product):
+    def get_product(cls, user, product):
         """
-        True if the specified user already has a record for the product.
+        If the specified user already has a record for the product,
+        returns the userproduct record.
+        Otherwise, return None.
         """
-        q = UserProduct.all(keys_only=True)
+        q = UserProduct.all()
         q.ancestor(user)
         q.filter("product = ", product)
-        return q.count(1) > 0
+        return q.get()
         
 class PaypalRequest(db.Model):
     """
@@ -142,7 +144,7 @@ class PaypalRequest(db.Model):
         tx = PaypalRequest(parent=user)
         tx.product_key = str(product.key())
         tx.amount = product.price
-        tx.pin = pin
+        tx.pin = pin.upper()
         tx.status = "PENDING"
         tx.put()
         return tx

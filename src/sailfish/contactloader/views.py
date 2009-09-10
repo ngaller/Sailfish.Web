@@ -29,11 +29,10 @@ class UploadForm(forms.Form):
 def index(request):
     user = auth.get_current_user(request)
     product = Product.get_by_key_name("ContactLoader")
-    reg = False
     lst = None
     form = None
-    if UserProduct.has_product(user, product):
-        reg = True        
+    reg = UserProduct.get_product(user, product)
+    if reg:            
         if request.method == "POST":
             form = handle_upload(request)
         else:
@@ -62,11 +61,11 @@ def handle_upload(request):
 def download(request):
     user = auth.get_current_user(request)    
     if not user:
-        pin = request.GET["pin"]
+        pin = request.GET["pin"].upper()
         code = request.GET["code"]
         product = Product.get_by_key_name("ContactLoader")
         userproduct = UserProduct.gql("where product = :1 and pin = :2", 
-                                      product, pin)
+                                      product, pin).get()
         if not userproduct or not userproduct.validate_code(code):
             raise Http404("Could not find activation data")
         user = userproduct.parent()
