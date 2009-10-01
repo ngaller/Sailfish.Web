@@ -1,24 +1,19 @@
 Manifest-Version: 1.0
-MIDlet-Version: 1.02
-MIDlet-Jar-Size: 183074
-RIM-COD-Module-Dependencies: net_rim_cldc,net_rim_bbapi_browser,net_rim_pdap
+MIDlet-Version: 1.05
+MIDlet-Jar-Size: 150733
 MicroEdition-Configuration: CLDC-1.1
 MIDlet-Jar-URL: ContactLoader.jar
-RIM-MIDlet-Icon-1-1: src/users_two_add_48.png,focused
-RIM-COD-URL-1: mobi_sailfish_ContactLoader-1.cod
-RIM-COD-SHA1-1: 96 d5 e3 36 70 a5 ff d7 c8 3c 12 46 af 35 35 12 1f 3c 27 35
+RIM-COD-Module-Dependencies: net_rim_cldc,net_rim_bbapi_browser,net_rim_pdap
 RIM-MIDlet-Flags-1: 0
-RIM-COD-Size-1: 51924
 RIM-COD-Module-Name: mobi_sailfish_ContactLoader
-RIM-COD-Size: 56348
+RIM-COD-Size: 62496
 MIDlet-Name: ContactLoader
-RIM-COD-Creation-Time: 1252353638
-MIDlet-1: Contact Loader,,
+RIM-COD-Creation-Time: 1254093034
+MIDlet-1: Contact Loader,users_two_add_48.png,
 RIM-COD-URL: mobi_sailfish_ContactLoader.cod
 MIDlet-Description: CSV Contact Importer
 RIM-MIDlet-NameResourceId-1: 32
-RIM-COD-SHA1: 02 f3 2b dc 75 a0 96 62 6b 5c 34 07 59 42 52 f5 1f 48 0a 03
+RIM-COD-SHA1: 35 0c b1 b4 9c 24 bb 30 b8 7a 6d a4 57 45 12 8f f2 5f 0b 86
 MicroEdition-Profile: MIDP-2.0
 MIDlet-Vendor: Sailfish.mobi
 RIM-MIDlet-NameResourceBundle-1: mobi.sailfish.contactloader.model.res.Localization
-RIM-MIDlet-Icon-Count-1: 1

@@ -15,7 +15,7 @@ from django import forms
 from datetime import datetime
 from models import Product, ProductForm, PaypalRequest, UserProduct
 
-def index(request):
+def index(request, *args):
     "Index page - show available products"
     return render_to_response('store/index.html', {
         'products': Product.all()

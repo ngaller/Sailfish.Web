@@ -5,7 +5,7 @@ Created on Aug 29, 2009
 '''
 # Django settings for sailfish project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ("24.217.162.30","192.168.2.4","192.168.2.1","127.0.0.1")
 
