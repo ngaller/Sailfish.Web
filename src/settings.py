@@ -18,7 +18,7 @@ APPEND_SLASH = True
 #)
 ADMINS = ()
 
-DEFAULT_FROM_EMAIL = "support@sailfish.mobi"
+DEFAULT_FROM_EMAIL = "contact@sailfish.mobi"
 
 MANAGERS = ADMINS
 

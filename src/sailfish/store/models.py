@@ -17,6 +17,7 @@ class Product(db.Model):
     """
     name = db.StringProperty()
     description = db.TextProperty()
+    short_description = db.TextProperty()
     price = db.FloatProperty(indexed=False)
     icon = db.StringProperty(indexed=False)
     download_url = db.StringProperty(indexed=False)

@@ -6,23 +6,8 @@
 <div class="product">
 <img alt="{{p.name}}" src="{{MEDIA_URL}}images/{{p.icon}}" class="icon"/>
 <div class="description">
-	<h1>{{p.name}}</h1>
-	<p>{{p.description|safe}}</p>	
-		{% if user.is_admin %}
-			<a href="/store/edit/{{p.key}}">Edit</a><br/>
-		{% endif %}
-
-	<div class="product_buttons">
-		{% if MOBILE %}
-			<a class="button" href="{{p.download_url_ota}}">Download</a>
-		{% else %}
-			<a class="button" href="{{p.download_url}}">Download</a>
-		{% endif %}
-		
-		{% if not p.is_freeware %}			
-			<a class="button" href="/store/purchase/{{p.key}}">Purchase</a>
-		{% endif %}
-	</div>
+	<h1><a href="/store/details/{{p.key}}">{{p.name}}</a></h1>
+	<p>{{p.short_description|safe}}</p>
 </div>
 </div>
 {% endif %}

@@ -9,7 +9,8 @@ from django.views.generic.simple import direct_to_template
 urlpatterns = patterns('sailfish.store.views',
     # Example:
     # (r'^sailfish/', include('sailfish.foo.urls')),
-    url('^(index.html)?$', 'index', name='store-index'),
+    url('^$', 'index', name='store-index'),
+    (r'^index.html$', 'index'),
     (r'^create/(?P<keyname>\w+)$', 'create'),
     (r'^details/$', 'details_search'),
     (r'^details/(?P<id>\w+)$', 'details'),
