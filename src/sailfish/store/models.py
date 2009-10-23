@@ -47,12 +47,18 @@ class UserProduct(db.Model):
     @classmethod
     def create_from_tx(cls, tx):
         """
-        Initialize with given transaction.
+        Initialize with given transaction, and save the product to the 
+        database.
         """
         up = UserProduct(parent=tx.user())
         up.product = db.Key(tx.product_key)
         up.purchase_date = tx.txdate
-        up.pin = tx.pin        
+        up.pin = tx.pin
+        up.put()        
+        uk = UserKey(parent=tx.user())
+        uk.product = db.Key(tx.product_key)
+        uk.pin = tx.pin
+        uk.put()
         return up
         
     def user(self):
@@ -94,6 +100,19 @@ class UserProduct(db.Model):
         q.ancestor(user)
         q.filter("product = ", product)
         return q.get()
+    
+class UserKey(db.Model):
+    '''
+    Represents a single installation of the product.
+    Parent entity = userprofile.
+    Used for sync.
+    '''
+    product = db.Reference(Product)
+    pin = db.StringProperty()
+        
+    def user(self):
+        return self.parent()
+    
         
 class PaypalRequest(db.Model):
     """
@@ -121,8 +140,7 @@ class PaypalRequest(db.Model):
             request.POST["payment_status"] == "Completed" and \
             request.POST["mc_gross"] == str(self.amount) and \
             request.POST["mc_currency"] == "USD":
-            userprod = UserProduct.create_from_tx(self)
-            userprod.put()
+            userprod = UserProduct.create_from_tx(self)            
             self.status = "COMPLETE"
             self.txnid = request.POST["txn_id"]
             self.put()

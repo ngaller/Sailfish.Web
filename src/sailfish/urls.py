@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     # alternative for some older links
     ('^software/', include('sailfish.store.urls')),
     ('^contactloader/', include('sailfish.contactloader.urls')),
+    ('^smartshopper/', include('sailfish.smartshopper.urls')),
     ('^auth/', include('auth.urls')),
     ('^([^/]*.html)$', direct_to_template),
 
